@@ -1,7 +1,7 @@
 package com.pluralsight.model;
 
 public class Sandwich extends MenuItem{
-    private String size;
+    private String sandwichSize;
     private boolean isToasted;
     private String breadType;
 
@@ -12,11 +12,11 @@ public class Sandwich extends MenuItem{
 //    }
 
     public String getSize() {
-        return size;
+        return sandwichSize;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setSize(String sandwichSize) {
+        this.sandwichSize = sandwichSize;
     }
 
     public boolean isToasted() {
