@@ -1,20 +1,17 @@
 package com.pluralsight.ui;
 
-import com.pluralsight.model.Chips;
-import com.pluralsight.model.Drink;
-import com.pluralsight.model.Sandwich;
-import com.pluralsight.model.Topping;
+import com.pluralsight.model.*;
 
 import java.io.*;
 import java.time.*;
 import java.util.*;
 
 public class UserInterface {
-    static LocalDateTime dateAndTime = LocalDateTime.now();
-    static Scanner input = new Scanner(System.in);
+   static Scanner input = new Scanner(System.in);
+    static ArrayList<MenuItem> menuItems = new ArrayList<>();
+    public static boolean programIsRunning = true;
 
     public static void displayHomeScreen() {
-        boolean programIsRunning = true;
         while (programIsRunning) {
             System.out.println("""
                    Welcome To Sandwich Shop!
@@ -70,7 +67,8 @@ public class UserInterface {
             case "2" -> sandwichSize = "Medium";
             case "3" -> sandwichSize = "Large";
         }
-        sandwich.setSize(sandwichSize);
+        sandwich.setSandwichSize(sandwichSize);
+        System.out.println(sandwich.getPrice());
 
         System.out.println("""
                Select your bread:
@@ -96,14 +94,12 @@ public class UserInterface {
               
                """);
         String isToasted = input.nextLine();
-        if (isToasted == "1") {
+        if (isToasted.equals("1")) {
             sandwich.setToasted(true);
-        } else if (isToasted == "2") {
+        } else if (isToasted.equals("2")) {
             sandwich.setToasted(false);
         }
-//        System.out.println(sandwich.getSize());
-//        System.out.println(sandwich.getBreadType());
-//        System.out.println(sandwich.isToasted());
+        menuItems.add(sandwich);
         orderToppings();
     }
 
@@ -340,35 +336,10 @@ public class UserInterface {
 
     public static void checkout() {
         System.out.println("Order Details");
-        // print sandwich, toppings, drink, chips information
-        // print price
+        System.out.println(Order.getCurrentTime());
+        System.out.println(menuItems);
 
-
-
-
-
-
+        programIsRunning = false;
     }
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

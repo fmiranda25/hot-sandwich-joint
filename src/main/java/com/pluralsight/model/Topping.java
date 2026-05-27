@@ -1,13 +1,16 @@
 package com.pluralsight.model;
 
+import static com.pluralsight.model.Sandwich.sandwichSize;
+
 public class Topping {
     private String meatType;
     private String cheeseType;
     private String veggieType;
     private String sauceType;
     private String sideType;
-    private String size;
     private boolean isExtraTopping;
+    private String size;
+    private double price;
 
 //    public Topping(boolean isMeat, boolean isCheese, boolean isSauce, String size) {
 //        this.isMeat = isMeat;
@@ -71,5 +74,31 @@ public class Topping {
 
     public void setExtraTopping(boolean extraTopping) {
         isExtraTopping = extraTopping;
+    }
+
+    public double getPrice() {
+        if (isExtraTopping) {
+            if (sandwichSize == "Small") {
+                price = 1.00;
+            } else if (sandwichSize == "Medium") {
+                price = 2.00;
+            } else if (sandwichSize == "Large") {
+                price = 3.00;
+            }
+            price += price / 2;
+        } else {
+            if (sandwichSize == "Small") {
+                price = 1.00;
+            } else if (sandwichSize == "Medium") {
+                price = 2.00;
+            } else if (sandwichSize == "Large") {
+                price = 3.00;
+            }
+        }
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
