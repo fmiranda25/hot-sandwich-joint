@@ -5,31 +5,40 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Order {
-    private ArrayList<MenuItem> orderedItems = new ArrayList<>();
+    private List<MenuItem> menuItems = new ArrayList<>();
     private LocalDateTime orderDateTime;
-    private double orderAmount;
 
-    public Order(ArrayList<MenuItem> orderedItems, double orderAmount) {
-        this.orderedItems = orderedItems;
-        this.orderAmount = orderAmount;
+    public Order() {
+
     }
 
-    public ArrayList<MenuItem> getOrderedItems() {
-        return orderedItems;
+    public Order(List<MenuItem> menuItems, LocalDateTime orderDateTime) {
+        this.menuItems = menuItems;
+        this.orderDateTime = orderDateTime;
     }
 
-    public void setOrderedItems(ArrayList<MenuItem> orderedItems) {
-        this.orderedItems = orderedItems;
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+        this.menuItems.add(menuItem);
     }
 
     public double getOrderAmount() {
+        double orderAmount = 0;
+
+        for (MenuItem menuItem : menuItems) {
+            orderAmount += menuItem.getPrice();
+        }
         return orderAmount;
     }
 
-    public void setOrderAmount(double orderAmount) {
-        this.orderAmount = orderAmount;
-    }
-
+// set menu item
     public static String getCurrentTime() {
         LocalDateTime unformattedDateTime = LocalDateTime.now();
         DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");

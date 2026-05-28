@@ -5,13 +5,16 @@ import com.pluralsight.model.*;
 import java.io.*;
 import java.time.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class UserInterface {
-   static Scanner input = new Scanner(System.in);
-    static ArrayList<MenuItem> menuItems = new ArrayList<>();
-    public static boolean programIsRunning = true;
+    static Order order = new Order();
+    static Sandwich sandwich;
+    static Topping topping;
+    static Scanner input = new Scanner(System.in);
+    static boolean programIsRunning = true;
 
-    public static void displayHomeScreen() {
+    public void displayHomeScreen() {
         while (programIsRunning) {
             System.out.println("""
                    Welcome To Sandwich Shop!
@@ -32,7 +35,7 @@ public class UserInterface {
 
     public static void displayOrderScreen() {
         System.out.println("""
-               What would you like for your order?
+               What would you like??
                1) Add Sandwich
                2) Add Drink
                3) Add Chips
@@ -48,12 +51,12 @@ public class UserInterface {
             case 2 -> orderDrink();
             case 3 -> orderChips();
             case 4 -> checkout();
-            case 0 -> displayHomeScreen();
+            case 0 -> displayOrderScreen();
         }
     }
 
     public static void orderSandwich() {
-        Sandwich sandwich = new Sandwich();
+        sandwich = new Sandwich();
 
         System.out.println("""
                Choose your sandwich size:
@@ -68,7 +71,7 @@ public class UserInterface {
             case "3" -> sandwichSize = "Large";
         }
         sandwich.setSandwichSize(sandwichSize);
-        System.out.println(sandwich.getPrice());
+        System.out.println(sandwich.getPrice()); //////////////////////// print sandwich price
 
         System.out.println("""
                Select your bread:
@@ -99,31 +102,31 @@ public class UserInterface {
         } else if (isToasted.equals("2")) {
             sandwich.setToasted(false);
         }
-        menuItems.add(sandwich);
+        order.addMenuItem(sandwich);
         orderToppings();
     }
 
     public static void orderToppings() {
+        topping = new Topping();
         System.out.println("""
                Select a topping type
                1) Meats
                2) Cheeses
                3) Veggies
                4) Condiments
-               5) Sides
+               
                """);
         String toppingCategory = input.nextLine();
         switch (toppingCategory) {
-            case "1" -> addMeatTopping();
+            case "1" -> addMeatTopping(false);
             case "2" -> addCheeseTopping();
             case "3" -> addVeggieTopping();
             case "4" -> addCondimentTopping();
-            case "5" -> addSideTopping();
         }
     }
 
-    public static void addMeatTopping() {
-        Topping meatTopping = new Topping();
+    public static void addMeatTopping(boolean isExtraTopping) {
+        boolean
         System.out.println("""
                        Select your meat toppings
                        1) Steak
@@ -136,25 +139,37 @@ public class UserInterface {
                        """);
         String meatType = input.nextLine();
         switch (meatType) {
-            case "1" -> meatTopping.setMeatType("Steak");
-            case "2" -> meatTopping.setMeatType("Ham");
-            case "3" -> meatTopping.setMeatType("Salami");
-            case "4" -> meatTopping.setMeatType("Roast Beef");
-            case "5" -> meatTopping.setMeatType("Chicken");
-            case "6" -> meatTopping.setMeatType("Bacon");
+            case "1" -> {
+                topping.setToppingType("Steak");
+                topping.setExtraTopping(isExtraTopping);
+            }
+            case "2" -> topping.setToppingType("Ham");
+            case "3" -> topping.setToppingType("Salami");
+            case "4" -> topping.setToppingType("Roast Beef");
+            case "5" -> topping.setToppingType("Chicken");
+            case "6" -> topping.setToppingType("Bacon");
         }
-        System.out.println(meatTopping.getMeatType());
-        System.out.println("Add another meat topping? (yes/no)");
-        String anotherMeatChoice = input.nextLine();
-        if (anotherMeatChoice.equalsIgnoreCase("yes")) {
-            addMeatTopping();
-        } else if (anotherMeatChoice.equalsIgnoreCase("no")) {
-            orderToppings();
+        sandwich.addToSandwich(topping);
+        System.out.println(topping.getPrice(sandwich.getSandwichSize()));
+
+        System.out.println("""
+                Anything else?
+                
+                1) Add another meat topping
+                2) Go back to toppings options
+                3) Done
+                
+                """);
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1" -> addMeatTopping(true);
+            case "2" -> orderToppings();
+            case "3" -> displayOrderScreen();
         }
+
     }
 
     public static void addCheeseTopping() {
-        Topping cheeseTopping = new Topping();
         System.out.println("""
                        Select your cheese toppings
                        1) American
@@ -164,11 +179,12 @@ public class UserInterface {
                       
                        """);
         String cheeseType = input.nextLine();
+
         switch (cheeseType) {
-            case "1" -> cheeseTopping.setCheeseType("American");
-            case "2" -> cheeseTopping.setCheeseType("Provolone");
-            case "3" -> cheeseTopping.setCheeseType("Cheddar");
-            case "4" -> cheeseTopping.setCheeseType("Swiss");
+            case "1" -> topping.setToppingType("American");
+            case "2" -> topping.setToppingType("Provolone");
+            case "3" -> topping.setToppingType("Cheddar");
+            case "4" -> topping.setToppingType("Swiss");
         }
         System.out.println("Add another cheese topping? (yes/no)");
         String anotherCheeseChoice = input.nextLine();
@@ -180,7 +196,6 @@ public class UserInterface {
     }
 
     public static void addVeggieTopping() {
-        Topping veggieTopping = new Topping();
         System.out.println("""
                        Select your veggie toppings
                        1) Lettuce
@@ -196,15 +211,15 @@ public class UserInterface {
                        """);
         String veggieType = input.nextLine();
         switch (veggieType) {
-            case "1" -> veggieTopping.setVeggieType("Lettuce");
-            case "2" -> veggieTopping.setVeggieType("Peppers");
-            case "3" -> veggieTopping.setVeggieType("Onions");
-            case "4" -> veggieTopping.setVeggieType("Tomatoes");
-            case "5" -> veggieTopping.setVeggieType("Jalapenos");
-            case "6" -> veggieTopping.setVeggieType("Cucumbers");
-            case "7" -> veggieTopping.setVeggieType("Pickles");
-            case "8" -> veggieTopping.setVeggieType("Guacamole");
-            case "9" -> veggieTopping.setVeggieType("Mushrooms");
+            case "1" -> topping.setToppingType("Lettuce");
+            case "2" -> topping.setToppingType("Peppers");
+            case "3" -> topping.setToppingType("Onions");
+            case "4" -> topping.setToppingType("Tomatoes");
+            case "5" -> topping.setToppingType("Jalapenos");
+            case "6" -> topping.setToppingType("Cucumbers");
+            case "7" -> topping.setToppingType("Pickles");
+            case "8" -> topping.setToppingType("Guacamole");
+            case "9" -> topping.setToppingType("Mushrooms");
         }
         System.out.println("Add another veggie topping?");
         String anotherVeggieChoice = input.nextLine();
@@ -216,7 +231,6 @@ public class UserInterface {
     }
 
     public static void addCondimentTopping() {
-        Topping condimentTopping = new Topping();
         System.out.println("""
                        Select your sauces
                        1) Mayo
@@ -229,12 +243,13 @@ public class UserInterface {
                        """);
         String condimentType = input.nextLine();
         switch (condimentType) {
-            case "1" -> condimentTopping.setSauceType("Mayo");
-            case "2" -> condimentTopping.setSauceType("Mustard");
-            case "3" -> condimentTopping.setSauceType("Ketchup");
-            case "4" -> condimentTopping.setSauceType("Ranch");
-            case "5" -> condimentTopping.setSauceType("Thousand Islands");
-            case "6" -> condimentTopping.setSauceType("Vinaigrette");
+            case "1" -> topping.setToppingType("Mayo");
+            case "2" -> topping.setToppingType("Mustard");
+            case "3" -> topping.setToppingType("Ketchup");
+            case "4" -> topping.setToppingType("Ranch");
+            case "5" -> topping.setToppingType("Thousand Islands");
+            case "6" -> topping.setToppingType("Vinaigrette");
+            case "7" -> topping.setToppingType("Au Jus");
         }
         System.out.println("Add another sauce? (yes/no)");
         String anotherCondimentChoice = input.nextLine();
@@ -242,28 +257,6 @@ public class UserInterface {
             addCondimentTopping();
         } else if (anotherCondimentChoice.equalsIgnoreCase("no")) {
             orderToppings();
-        }
-    }
-
-    public static void addSideTopping() {
-        Topping sideTopping = new Topping();
-        System.out.println("""
-                       Select your sides
-                       1) Au Jus
-                       2) Sauce
-                      
-                       """);
-        String sideType = input.nextLine();
-        switch (sideType) {
-            case "1" -> sideTopping.setSideType("Au Jus");
-            case "2" -> sideTopping.setSideType("Sauce");
-        }
-        System.out.println("Add another side? (yes/no)");
-        String anotherSideChoice = input.nextLine();
-        if (anotherSideChoice.equalsIgnoreCase("yes")) {
-            addSideTopping();
-        } else if (anotherSideChoice.equalsIgnoreCase("no")) {
-            orderDrink();
         }
     }
 
@@ -334,10 +327,18 @@ public class UserInterface {
         }
     }
 
+    public static void displayOrderConfirmation() {
+        // display whole order
+        // cancel order
+    }
+
     public static void checkout() {
         System.out.println("Order Details");
         System.out.println(Order.getCurrentTime());
-        System.out.println(menuItems);
+        System.out.println(order.getOrderAmount());
+        for (MenuItem menuItem : order.getMenuItems()) {
+            System.out.println(menuItem);
+        }
 
         programIsRunning = false;
     }

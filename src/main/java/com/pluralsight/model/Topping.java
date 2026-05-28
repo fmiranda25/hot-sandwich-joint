@@ -1,63 +1,17 @@
 package com.pluralsight.model;
 
-import static com.pluralsight.model.Sandwich.sandwichSize;
-
-public class Topping {
-    private String meatType;
-    private String cheeseType;
-    private String veggieType;
-    private String sauceType;
-    private String sideType;
+public class Topping extends MenuItem{
+    private String toppingType;
     private boolean isExtraTopping;
     private String size;
     private double price;
 
-//    public Topping(boolean isMeat, boolean isCheese, boolean isSauce, String size) {
-//        this.isMeat = isMeat;
-//        this.isCheese = isCheese;
-//        this.isSauce = isSauce;
-//        this.size = size;
-//    }
-
-
-    public String getMeatType() {
-        return meatType;
+    public String getToppingType() {
+        return toppingType;
     }
 
-    public void setMeatType(String meatType) {
-        this.meatType = meatType;
-    }
-
-    public String getCheeseType() {
-        return cheeseType;
-    }
-
-    public void setCheeseType(String cheeseType) {
-        this.cheeseType = cheeseType;
-    }
-
-    public String getVeggieType() {
-        return veggieType;
-    }
-
-    public void setVeggieType(String veggieType) {
-        this.veggieType = veggieType;
-    }
-
-    public String getSauceType() {
-        return sauceType;
-    }
-
-    public void setSauceType(String sauceType) {
-        this.sauceType = sauceType;
-    }
-
-    public String getSideType() {
-        return sideType;
-    }
-
-    public void setSideType(String sideType) {
-        this.sideType = sideType;
+    public void setToppingType(String toppingType) {
+        this.toppingType = toppingType;
     }
 
     public String getSize() {
@@ -76,7 +30,12 @@ public class Topping {
         isExtraTopping = extraTopping;
     }
 
+    @Override
     public double getPrice() {
+        return price;
+    }
+
+    public double getPrice(String sandwichSize) {
         if (isExtraTopping) {
             if (sandwichSize == "Small") {
                 price = 1.00;
@@ -101,4 +60,10 @@ public class Topping {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return toppingType + " " + getPrice();
+    }
+
 }

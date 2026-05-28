@@ -1,11 +1,13 @@
 package com.pluralsight;
-import static com.pluralsight.ui.UserInterface.displayHomeScreen;
+
+import com.pluralsight.ui.UserInterface;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        displayHomeScreen();
+        UserInterface userInterface = new UserInterface();
+        userInterface.displayHomeScreen(); // utilizing UserInterface(?)
     }
 
 }

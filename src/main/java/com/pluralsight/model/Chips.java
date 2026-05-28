@@ -22,8 +22,4 @@ public class Chips extends MenuItem{
         return 1.50;
     }
 
-    @Override
-    public void setPrice(double price) {
-        this.price = price;
-    }
 }
