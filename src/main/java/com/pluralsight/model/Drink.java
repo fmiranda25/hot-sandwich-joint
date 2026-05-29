@@ -10,6 +10,10 @@ public class Drink extends MenuItem{
         this.drinkType = drinkType;
     }
 
+    public Drink() {
+
+    }
+
     public String getDrinkSize() {
         return drinkSize;
     }
@@ -42,4 +46,17 @@ public class Drink extends MenuItem{
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder receipt = new StringBuilder();
+
+        receipt.append("=== Drink ===\n");
+        receipt.append("Size: ").append(drinkSize).append("\n");
+        receipt.append("Type: ").append(drinkType).append("\n");
+
+        receipt.append(String.format("Price: $%.2f\n", getPrice()));
+        return receipt.toString();
+    }
+
 }

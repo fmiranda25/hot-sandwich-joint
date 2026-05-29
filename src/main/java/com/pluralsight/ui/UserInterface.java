@@ -1,11 +1,7 @@
 package com.pluralsight.ui;
 
 import com.pluralsight.model.*;
-
-import java.io.*;
-import java.time.*;
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class UserInterface {
     static Order order = new Order();
@@ -318,69 +314,89 @@ public class UserInterface {
     }
 
     public static void orderDrink() {
-        String drinkSize = "";
-        String drinkType = "";
-        Drink drink = new Drink(drinkSize, drinkType);
-        System.out.println("Would you like a drink? (yes/no)");
-        String drinkChoice = input.nextLine();
-        if (drinkChoice.equalsIgnoreCase("yes")) {
-            System.out.println("""
-                   Select a drink
-                   1) Pepsi
-                   2) Sprite
-                   3) Orange Juice
-                   4) Water
-                  
-                   """);
-            drinkType = input.nextLine();
-            switch (drinkType) {
-                case "1" -> drink.setDrinkType("Pepsi");
-                case "2" -> drink.setDrinkType("Sprite");
-                case "3" -> drink.setDrinkType("Orange Juice");
-                case "4" -> drink.setDrinkType("Water");
-            }
-            System.out.println("""
-                    Select your size
-                    1) Large
-                    2) Medium
-                    3) Small
-                    
-                    """);
-            drinkSize = input.nextLine();
-            switch (drinkSize) {
-                case "1" -> drink.setDrinkSize("Large");
-                case "2" -> drink.setDrinkSize("Medium");
-                case "3" -> drink.setDrinkSize("Small");
-            }
-            //System.out.println(drink);
-        } else if (drinkChoice.equalsIgnoreCase("no")) {
-            orderChips();
+        Drink drink = new Drink();
+        String drinkType;
+        String drinkSize;
+
+        System.out.println("""
+                Select a drink
+                1) Pepsi
+                2) Sprite
+                3) Orange Juice
+                4) Water
+                
+                """);
+        drinkType = input.nextLine();
+        switch (drinkType) {
+            case "1" -> drink.setDrinkType("Pepsi");
+            case "2" -> drink.setDrinkType("Sprite");
+            case "3" -> drink.setDrinkType("Orange Juice");
+            case "4" -> drink.setDrinkType("Water");
         }
+        System.out.println("""
+                Select your size
+                1) Large
+                2) Medium
+                3) Small
+                    
+                """);
+        drinkSize = input.nextLine();
+        switch (drinkSize) {
+            case "1" -> drink.setDrinkSize("Large");
+            case "2" -> drink.setDrinkSize("Medium");
+            case "3" -> drink.setDrinkSize("Small");
+        }
+        System.out.println(drink.getPrice());
+        order.addMenuItem(drink);
+
+        System.out.println("""
+                Anything else?
+                
+                1) Add another drink
+                2) Done
+                
+                """);
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1" -> orderDrink();
+            case "2" -> displayOrderScreen();
+        }
+
     }
 
     public static void orderChips() {
-        String chipsType = "";
-        Chips chips = new Chips(chipsType);
-        System.out.println("Would you like chips with your order? (yes/no)");
-        String chipsChoice = input.nextLine();
-        if (chipsChoice.equalsIgnoreCase("yes")) {
-            System.out.println("""
-                   Select a drink
-                   1) Sun Chips
-                   2) Lays Oven Baked
-                   3) Doritos
-                   4) Miss Vickie's
-                  
-                   """);
-            chipsType = input.nextLine();
-            switch(chipsType) {
-                case "1" -> chips.setChipsType("Sun Chips");
-                case "2" -> chips.setChipsType("Lays Oven Baked");
-                case "3" -> chips.setChipsType("Doritos");
-                case "4" -> chips.setChipsType("Miss Vickie's");
-            }
-        } else if (chipsChoice.equalsIgnoreCase("no")) {
-            checkout();
+        Chips chips = new Chips();
+        String chipsType;
+
+       System.out.println("""
+               Select a drink
+               1) Sun Chips
+               2) Lays Oven Baked
+               3) Doritos
+               4) Miss Vickie's
+                   
+               """);
+       chipsType = input.nextLine();
+       switch(chipsType) {
+           case "1" -> chips.setChipsType("Sun Chips");
+           case "2" -> chips.setChipsType("Lays Oven Baked");
+           case "3" -> chips.setChipsType("Doritos");
+           case "4" -> chips.setChipsType("Miss Vickie's");
+       }
+        System.out.println(chips.getPrice());
+        order.addMenuItem(chips);
+
+        System.out.println("""
+                Anything else?
+                
+                1) Add another
+                2) Done
+                
+                """);
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1" -> orderChips();
+            case "2" -> displayOrderScreen();
         }
     }
 
@@ -390,12 +406,16 @@ public class UserInterface {
     }
 
     public static void checkout() {
+        double total = 0;
         System.out.println("Order Details");
         System.out.println(Order.getCurrentTime() + "\n");
 
         for (MenuItem menuItem : order.getMenuItems()) {
             System.out.println(menuItem);
+            total += menuItem.getPrice();
         }
+
+        System.out.printf("Total: $%.2f", total);
 
         programIsRunning = false;
     }

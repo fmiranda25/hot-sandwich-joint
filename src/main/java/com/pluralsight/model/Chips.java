@@ -5,8 +5,11 @@ public class Chips extends MenuItem{
     private double price;
 
     public Chips(String chipsType) {
-        super();
         this.chipsType = chipsType;
+    }
+
+    public Chips() {
+
     }
 
     public String getChipsType() {
@@ -22,4 +25,14 @@ public class Chips extends MenuItem{
         return 1.50;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder receipt = new StringBuilder();
+
+        receipt.append("=== Chips ===\n");
+        receipt.append("Flavor: ").append(chipsType).append("\n");
+
+        receipt.append(String.format("Price: $%.2f\n", getPrice()));
+        return receipt.toString();
+    }
 }

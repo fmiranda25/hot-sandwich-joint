@@ -13,13 +13,6 @@ public class Sandwich extends MenuItem{
         toppings = new ArrayList<>();
     }
 
-//    public Sandwich(String size, boolean isToasted, String breadType) {
-//        this.size = size;
-//        this.isToasted = isToasted;
-//        this.breadType = breadType;
-//    }
-
-
     public List<Topping> getToppings() {
         return toppings;
     }
@@ -56,6 +49,7 @@ public class Sandwich extends MenuItem{
         this.toppings.add(topping);
     }
 
+    @Override
     public double getPrice() {
         if (sandwichSize == "Small") {
             price = 5.50;
@@ -97,4 +91,6 @@ public class Sandwich extends MenuItem{
 
         return receipt.toString();
     }
+
+
 }
