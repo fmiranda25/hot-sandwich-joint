@@ -13,6 +13,7 @@ public class UserInterface {
     static boolean programIsRunning = true;
 
     public static void displayHomeScreen() {
+        order = new Order();
         while (programIsRunning) {
             System.out.println("""
                    Welcome To Sandwich Shop!
@@ -29,7 +30,7 @@ public class UserInterface {
                 case 0 -> programIsRunning = false;
             }
         }
-    } //////////////////////////////////////////////////////////////////////////////////////////end of displayHomeScreen
+    }
 
     public static void displayOrderScreen() {
         System.out.println("""
@@ -49,7 +50,7 @@ public class UserInterface {
             case 2 -> orderDrink();
             case 3 -> orderChips();
             case 4 -> checkout();
-            case 0 -> displayOrderScreen();
+            case 0 -> displayHomeScreen();
         }
     }
 
@@ -69,7 +70,7 @@ public class UserInterface {
             case "3" -> sandwichSize = "Large";
         }
         sandwich.setSandwichSize(sandwichSize);
-        System.out.println(sandwich.getPrice()); //////////////////////// print sandwich price
+        System.out.println(sandwich.getPrice());
 
         System.out.println("""
                Select your bread:
@@ -403,11 +404,6 @@ public class UserInterface {
         }
     }
 
-    public static void displayOrderConfirmation() {
-        // display whole order
-        // cancel order
-    }
-
     public static int checkout() {
         double total = 0;
         System.out.println("Order Details");
@@ -431,7 +427,6 @@ public class UserInterface {
             try {
                 ReceiptWriter receiptWriter = new ReceiptWriter();
                 receiptWriter.CreateReceipt(order);
-                order = new Order();
                 System.out.println("""
                         Order Confirmed
                         1) Return to Home Screen
@@ -453,7 +448,6 @@ public class UserInterface {
                     """);
             String cancelOrder = input.nextLine();
             if (cancelOrder.equals("1")) {
-                order = new Order();
                 displayHomeScreen();
             } else if (cancelOrder.equals("2")) {
                 checkout();
