@@ -36,7 +36,25 @@ public class Topping extends MenuItem{
     }
 
     public double getPrice(String sandwichSize) {
-        if (isExtraTopping) {
+        if (isExtraTopping && (toppingType.equals("Steak") ||
+                toppingType.equals("Ham") ||
+                toppingType.equals("Salami") ||
+                toppingType.equals("Roast Beef") ||
+                toppingType.equals("Chicken") ||
+                toppingType.equals("Bacon"))) {
+            if (sandwichSize == "Small") {
+                price = 0.50;
+            } else if (sandwichSize == "Medium") {
+                price = 1.00;
+            } else if (sandwichSize == "Large") {
+                price = 1.50;
+            }
+        } else if (!isExtraTopping && (toppingType.equals("Steak") ||
+                toppingType.equals("Ham") ||
+                toppingType.equals("Salami") ||
+                toppingType.equals("Roast Beef") ||
+                toppingType.equals("Chicken") ||
+                toppingType.equals("Bacon"))) {
             if (sandwichSize == "Small") {
                 price = 1.00;
             } else if (sandwichSize == "Medium") {
@@ -44,14 +62,28 @@ public class Topping extends MenuItem{
             } else if (sandwichSize == "Large") {
                 price = 3.00;
             }
-            price += price / 2;
-        } else {
+        } else if (isExtraTopping && (toppingType.equals("American") ||
+                toppingType.equals("Provolone") ||
+                toppingType.equals("Cheddar") ||
+                toppingType.equals("Swiss"))) {
             if (sandwichSize == "Small") {
-                price = 1.00;
+                price = 0.30;
             } else if (sandwichSize == "Medium") {
-                price = 2.00;
+                price = 0.60;
             } else if (sandwichSize == "Large") {
-                price = 3.00;
+                price = 0.90;
+            }
+
+        } else if (!isExtraTopping && (toppingType.equals("American") ||
+                toppingType.equals("Provolone") ||
+                toppingType.equals("Cheddar") ||
+                toppingType.equals("Swiss"))) {
+            if (sandwichSize == "Small") {
+                price = 0.75;
+            } else if (sandwichSize == "Medium") {
+                price = 1.50;
+            } else if (sandwichSize == "Large") {
+                price = 2.25;
             }
         }
         return price;
