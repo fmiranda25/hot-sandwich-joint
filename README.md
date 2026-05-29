@@ -15,9 +15,6 @@ You can also order a drink with your choice of size and flavor, along with a bag
 
 <img width="934" height="237" alt="image" src="https://github.com/user-attachments/assets/7f09ebb2-d5e2-4f2e-b00d-6d49ad27b49e" />
 
-```
-Enter the amount: Please don't leave this blank
-```
 ## Ordering Your Toppings
 
 <img width="488" height="184" alt="image" src="https://github.com/user-attachments/assets/a22cac9c-e841-4bb3-a3bd-0ac5a6075c9f" />
