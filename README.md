@@ -7,7 +7,7 @@ A simple sandwich shop that allows you buy sandwiches, drinks, and snacks.
 The application prompts you to order either a sandwich, a drink, or chips.
 
 ## Build Your Order
-### Sanwich
+### Sandwich
 Here you will be able to create your sandwich, you can choose your bread type and size, what kinds of toppings including meats, cheeses, veggies, condiments, as well as the option to toast your sandwich
 
 ### Chips and Drinks
