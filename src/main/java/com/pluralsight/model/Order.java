@@ -38,13 +38,19 @@ public class Order {
         return orderAmount;
     }
 
-// set menu item
-    public static String getCurrentTime() {
+    public static String getDateTime() {
         LocalDateTime unformattedDateTime = LocalDateTime.now();
         DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
         return unformattedDateTime.format(dateTime);
     }
-
+/*
+    @Override
+    public String toString() {
+        ;
+        System.out.println("hi");
+        return toString();
+    }
+*/
 }
 
 

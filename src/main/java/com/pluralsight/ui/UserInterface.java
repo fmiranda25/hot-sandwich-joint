@@ -1,6 +1,9 @@
 package com.pluralsight.ui;
 
+import com.pluralsight.data.ReceiptWriter;
 import com.pluralsight.model.*;
+
+import java.io.IOException;
 import java.util.*;
 
 public class UserInterface {
@@ -9,7 +12,7 @@ public class UserInterface {
     static Scanner input = new Scanner(System.in);
     static boolean programIsRunning = true;
 
-    public void displayHomeScreen() {
+    public static void displayHomeScreen() {
         while (programIsRunning) {
             System.out.println("""
                    Welcome To Sandwich Shop!
@@ -405,19 +408,60 @@ public class UserInterface {
         // cancel order
     }
 
-    public static void checkout() {
+    public static int checkout() {
         double total = 0;
         System.out.println("Order Details");
-        System.out.println(Order.getCurrentTime() + "\n");
+        System.out.println(Order.getDateTime() + "\n");
 
         for (MenuItem menuItem : order.getMenuItems()) {
             System.out.println(menuItem);
             total += menuItem.getPrice();
         }
 
-        System.out.printf("Total: $%.2f", total);
+        System.out.printf("Total: $%.2f\n", total);
+
+        System.out.println("""
+                Confirm Order?
+                1) Yes
+                2) No
+                
+                """);
+        String confirmOrder = input.nextLine();
+        if (confirmOrder.equals("1")) {
+            try {
+                ReceiptWriter receiptWriter = new ReceiptWriter();
+                receiptWriter.CreateReceipt(order);
+                order = new Order();
+                System.out.println("""
+                        Order Confirmed
+                        1) Return to Home Screen
+                        
+                        """);
+                String returnHome = input.nextLine();
+                if (returnHome.equals("1")) {
+                    displayHomeScreen();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (confirmOrder.equals("2")) {
+            System.out.println("""
+                    Are you sure you want to cancel?
+                    1) Yes
+                    2) No
+                    
+                    """);
+            String cancelOrder = input.nextLine();
+            if (cancelOrder.equals("1")) {
+                order = new Order();
+                displayHomeScreen();
+            } else if (cancelOrder.equals("2")) {
+                checkout();
+            }
+        }
 
         programIsRunning = false;
+        return 0;
     }
 }
 
