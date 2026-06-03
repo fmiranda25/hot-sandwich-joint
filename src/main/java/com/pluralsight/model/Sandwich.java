@@ -51,11 +51,11 @@ public class Sandwich extends MenuItem{
 
     @Override
     public double getPrice() {
-        if (sandwichSize == "Small") {
+        if (sandwichSize.equals("Small")) {
             price = 5.50;
-        } else if (sandwichSize == "Medium") {
+        } else if (sandwichSize.equals("Medium")) {
             price = 7.00;
-        } else if (sandwichSize == "Large") {
+        } else if (sandwichSize.equals("Large")) {
             price = 8.50;
         }
         for (Topping topping : toppings) {
@@ -87,7 +87,7 @@ public class Sandwich extends MenuItem{
             }
         }
 
-        receipt.append(String.format("Price: $%.2f\n", getPrice()));
+        //receipt.append(String.format("Price: $%.2f\n", getPrice()));
 
         return receipt.toString();
     }

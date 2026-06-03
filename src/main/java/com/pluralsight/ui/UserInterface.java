@@ -404,17 +404,25 @@ public class UserInterface {
         }
     }
 
-    public static int checkout() {
+    public static String getOrderTotal() {
         double total = 0;
-        System.out.println("Order Details");
-        System.out.println(Order.getDateTime() + "\n");
+        StringBuilder finalReceipt = new StringBuilder();
+        finalReceipt.append("Order Details\n");
+        finalReceipt.append(Order.createReceiptDateTime() + "\n");
+        finalReceipt.append("\n");
 
         for (MenuItem menuItem : order.getMenuItems()) {
-            System.out.println(menuItem);
+            finalReceipt.append(menuItem);
+            finalReceipt.append("\n");
             total += menuItem.getPrice();
         }
+        finalReceipt.append(String.format("Total: $%.2f\n", total));
+        return finalReceipt.toString();
+    }
 
-        System.out.printf("Total: $%.2f\n", total);
+    public static int checkout() {
+        getOrderTotal();
+        System.out.println(getOrderTotal());
 
         System.out.println("""
                 Confirm Order?
@@ -426,7 +434,7 @@ public class UserInterface {
         if (confirmOrder.equals("1")) {
             try {
                 ReceiptWriter receiptWriter = new ReceiptWriter();
-                receiptWriter.CreateReceipt(order);
+                receiptWriter.CreateReceipt();
                 System.out.println("""
                         Order Confirmed
                         1) Return to Home Screen

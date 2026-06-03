@@ -7,12 +7,11 @@ import java.io.*;
 
 public class ReceiptWriter {
 
-    public void CreateReceipt(Order order) throws IOException {
-        File filePath = new File("receipts");
+    public void CreateReceipt() throws IOException {
         String fileName = Order.getDateTime() + ".txt";
-        FileWriter fileWriter = new FileWriter(fileName);
-        File file = new File(filePath, fileName);
-        fileWriter.write(order.toString());
+        File receipt = new File("receipts", fileName);
+        FileWriter fileWriter = new FileWriter(receipt);
+        fileWriter.write(String.valueOf(UserInterface.getOrderTotal()));
 
         fileWriter.close();
    }

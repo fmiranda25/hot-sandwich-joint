@@ -43,12 +43,29 @@ public class Order {
         DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
         return unformattedDateTime.format(dateTime);
     }
+
+    public static String createReceiptDateTime() {
+        LocalDateTime unformattedDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd, hh:mm:ss");
+        return unformattedDateTime.format(dateTime);
+    }
 /*
     @Override
     public String toString() {
-        ;
-        System.out.println("hi");
-        return toString();
+        double total = 0;
+        StringBuilder finalReceipt = new StringBuilder();
+        finalReceipt.append("Order Details\n");
+        finalReceipt.append(Order.getDateTime() + "\n");
+        finalReceipt.append("\n");
+
+        for (MenuItem menuItem : getMenuItems()) {
+            finalReceipt.append(menuItem);
+            System.out.println(menuItem);
+            finalReceipt.append("\n");
+            total += menuItem.getPrice();
+        }
+        finalReceipt.append(String.format("Total: $%.2f\n", total));
+        return finalReceipt.toString();
     }
 */
 }
