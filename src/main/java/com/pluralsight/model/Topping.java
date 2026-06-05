@@ -95,7 +95,7 @@ public class Topping extends MenuItem{
 
     @Override
     public String toString() {
-        return toppingType + " " + getPrice();
+        return toppingType + ": $" + getPrice();
     }
 
 }
