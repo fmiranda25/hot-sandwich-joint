@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.*;
 
 public class UserInterface {
-    static Order order = new Order();
-    static Sandwich sandwich;
-    static Scanner input = new Scanner(System.in);
-    static boolean programIsRunning = true;
+     Order order = new Order();
+     Sandwich sandwich;
+     Scanner input = new Scanner(System.in);
+     boolean programIsRunning = true;
 
-    public static void displayHomeScreen() {
+    public  void runHomeScreen() {
         order = new Order();
         while (programIsRunning) {
             System.out.println("""
@@ -32,7 +32,7 @@ public class UserInterface {
         }
     }
 
-    public static void displayOrderScreen() {
+    public  void displayOrderScreen() {
         System.out.println("""
                What would you like??
                1) Add Sandwich
@@ -50,11 +50,11 @@ public class UserInterface {
             case 2 -> orderDrink();
             case 3 -> orderChips();
             case 4 -> checkout();
-            case 0 -> displayHomeScreen();
+            case 0 -> runHomeScreen();
         }
     }
 
-    public static void orderSandwich() {
+    public  void orderSandwich() {
         sandwich = new Sandwich();
 
         System.out.println("""
@@ -105,7 +105,7 @@ public class UserInterface {
         orderToppings();
     }
 
-    public static void orderToppings() {
+    public  void orderToppings() {
         System.out.println("""
                Select a topping type
                1) Meats
@@ -123,7 +123,7 @@ public class UserInterface {
         }
     }
 
-    public static void addMeatTopping(boolean isExtraTopping) {
+    public  void addMeatTopping(boolean isExtraTopping) {
         Topping topping = new Topping();
         System.out.println("""
                        Select your meat toppings
@@ -182,7 +182,7 @@ public class UserInterface {
 
     }
 
-    public static void addCheeseTopping(boolean isExtraTopping) {
+    public  void addCheeseTopping(boolean isExtraTopping) {
         Topping topping = new Topping();
         System.out.println("""
                        Select your cheese toppings
@@ -231,7 +231,7 @@ public class UserInterface {
         }
     }
 
-    public static void addVeggieTopping() {
+    public  void addVeggieTopping() {
         Topping topping = new Topping();
         System.out.println("""
                        Select your veggie toppings
@@ -276,7 +276,7 @@ public class UserInterface {
         }
     }
 
-    public static void addCondimentTopping() {
+    public  void addCondimentTopping() {
         Topping topping = new Topping();
         System.out.println("""
                        Select your sauces
@@ -317,7 +317,7 @@ public class UserInterface {
         }
     }
 
-    public static void orderDrink() {
+    public  void orderDrink() {
         Drink drink = new Drink();
         String drinkType;
         String drinkSize;
@@ -368,7 +368,7 @@ public class UserInterface {
 
     }
 
-    public static void orderChips() {
+    public  void orderChips() {
         Chips chips = new Chips();
         String chipsType;
 
@@ -404,25 +404,8 @@ public class UserInterface {
         }
     }
 
-    public static String getOrderTotal() {
-        double total = 0;
-        StringBuilder finalReceipt = new StringBuilder();
-        finalReceipt.append("Order Details\n");
-        finalReceipt.append(Order.createReceiptDateTime() + "\n");
-        finalReceipt.append("\n");
-
-        for (MenuItem menuItem : order.getMenuItems()) {
-            finalReceipt.append(menuItem);
-            finalReceipt.append("\n");
-            total += menuItem.getPrice();
-        }
-        finalReceipt.append(String.format("Total: $%.2f\n", total));
-        return finalReceipt.toString();
-    }
-
-    public static int checkout() {
-        getOrderTotal();
-        System.out.println(getOrderTotal());
+    public  int checkout() {
+       System.out.println(order.toReceiptText());
 
         System.out.println("""
                 Confirm Order?
@@ -442,7 +425,7 @@ public class UserInterface {
                         """);
                 String returnHome = input.nextLine();
                 if (returnHome.equals("1")) {
-                    displayHomeScreen();
+                    runHomeScreen();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -456,7 +439,7 @@ public class UserInterface {
                     """);
             String cancelOrder = input.nextLine();
             if (cancelOrder.equals("1")) {
-                displayHomeScreen();
+                runHomeScreen();
             } else if (cancelOrder.equals("2")) {
                 checkout();
             }

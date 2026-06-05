@@ -21,21 +21,8 @@ public class Order {
         return menuItems;
     }
 
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
-    }
-
     public void addMenuItem(MenuItem menuItem) {
         this.menuItems.add(menuItem);
-    }
-
-    public double getOrderAmount() {
-        double orderAmount = 0;
-
-        for (MenuItem menuItem : menuItems) {
-            orderAmount += menuItem.getPrice();
-        }
-        return orderAmount;
     }
 
     public static String getDateTime() {
@@ -48,6 +35,32 @@ public class Order {
         LocalDateTime unformattedDateTime = LocalDateTime.now();
         DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd, hh:mm:ss");
         return unformattedDateTime.format(dateTime);
+    }
+
+    public double getOrderTotal() {
+        double total = 0;
+
+        for (MenuItem menuItem : menuItems) {
+            total += menuItem.getPrice();
+        }
+
+        return total;
+    }
+
+    public String toReceiptText() {
+        double total = getOrderTotal();
+        StringBuilder finalReceipt = new StringBuilder();
+        finalReceipt.append("Order Details\n");
+        finalReceipt.append(Order.createReceiptDateTime() + "\n");
+        finalReceipt.append("\n");
+
+        for (MenuItem menuItem : menuItems) {
+            finalReceipt.append(menuItem);
+            finalReceipt.append("\n");
+            total += menuItem.getPrice();
+        }
+        finalReceipt.append(String.format("Total: $%.2f\n", total));
+        return finalReceipt.toString();
     }
 /*
     @Override
